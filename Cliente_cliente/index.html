@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Restaurante - Cliente</title>
+    <style>
+      .seccion {
+        display: none;
+      }
+      .activa {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Restaurante - Cliente</h1>
+
+    <div id="login" class="seccion activa">
+      <form>
+        <h2>Login Cliente</h2>
+        <div>
+          Mesa número:
+          <input type="text" autocomplete="off" id="tableNumber" />
+        </div>
+      </form>
+
+      <button onclick="entrar()">Entrar</button>
+    </div>
+
+    <div id="pedidos" class="seccion">
+      <h2>¿Qué te apetece?</h2>
+      <div class="seleccion">
+
+        <label for="food">Plato: </label>
+        <input id="food" name="food" type="text" />
+
+        <label for="howMany">Cantidad: </label>
+        <input type="number" id="howMany" name="howMany"/>
+
+      </div>
+      <button onclick="enviarPedido()">Enviar</button>
+      <button onclick="salir()">Salir</button>
+    </div>
+
+    <script src="cliente_cliente.js"></script>
+  </body>
+</html>
