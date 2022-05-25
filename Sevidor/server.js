@@ -1,15 +1,57 @@
 var express = require("express");
 var app = express();
 
+var datos = require("./datos.js");
+
+var platos = datos.platos;
+
 app.set('json spaces',1);
 app.use("/cliente", express.static("../Cliente_cliente"));
 app.use("/camarero", express.static("../Cliente_camarero"));
 app.use("/cocina", express.static("../Cliente_cocina"));
 
 app.use(express.json());
+
+app.set('json spaces', 1);
+// Parte de REST
+
+// Para obtener la información de los platos
+app.get("/api/platos", (req, res) => {
+    res.status(200).json(platos);
+})
+
+
+// El servidor escucha en el puerto 8080.
 app.listen(8080);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// La parte de websockets
 // Crear un servidor web HTTP
 var http = require("http"); //Este viene con node, ya está instalado
 var httpServer = http.createServer();
@@ -18,6 +60,7 @@ var WebSocketServer = require("websocket").server; // instalar previamente: npm 
 var wsServer = new WebSocketServer({
 	httpServer: httpServer
 });
+
 
 // Iniciar el servidor HTTP en un puerto
 var puerto = 4444;

@@ -30,14 +30,15 @@
       <button onclick="entrar()">Entrar</button>
     </div>
 
+
+    <!-- Parte de los pedidos -->
     <div id="pedidos" class="seccion">
       <h2>¿Qué te apetece?</h2>
+
+      <dl id="platosDeLaCarta"></dl>
+      
       <div class="seleccion">
 
-        <label for="food">Plato: </label>
-        <input id="food" name="food" type="text" />
-        <label for="howMany">Cantidad: </label>
-        <input type="number" id="howMany" name="howMany"/>
       </div>
       <button onclick="anyadir()">Añadir</button>
       <button onclick="salir()">Salir</button>
@@ -48,6 +49,10 @@
         <button onclick="enviarPedidos()">Enviar Pedido</button>
       </div>
     </div> 
+
+
+
     <script src="cliente_cliente.js"></script>
+    <script src="rest.js"></script>
   </body>
 </html>
