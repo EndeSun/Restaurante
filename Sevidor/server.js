@@ -4,6 +4,7 @@ var app = express();
 var datos = require("./datos.js");
 
 var platos = datos.platos;
+var comandaCliente = [];
 
 app.set('json spaces',1);
 app.use("/cliente", express.static("../Cliente_cliente"));
@@ -18,6 +19,16 @@ app.set('json spaces', 1);
 // Para obtener la información de los platos
 app.get("/api/platos", (req, res) => {
     res.status(200).json(platos);
+})
+
+app.post("/api/sumarPlato/:mesa", (req, res) =>{
+    var mesa = req.params.mesa;
+    var plato = {
+        id: req.body.id,
+        nombre: req.body.nombre
+    };
+    comandaCliente.push(plato);
+    res.status(201).json(plato);
 })
 
 

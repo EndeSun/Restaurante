@@ -7,17 +7,9 @@ var conexion = "";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+var mesa = "";
+var platos = [];
+var comanda = null;
 
 
 
@@ -31,22 +23,24 @@ function cambiarSeccion(seccion) {
 }
 
 function entrar() {
+    comanda = document.getElementById("listaComanda");
+    comanda.innerHTML = "";
     conexion = new WebSocket("ws://localhost:4444", "clientes");
     conexion.addEventListener('open', function (event) {
 
-        var platos = [];
+
         rest.get("/api/platos", (estado, respuesta) => {
             if (estado == 200) {
                 platos = respuesta;
             }
-            var mesa = document.getElementById("tableNumber").value;
+            mesa = document.getElementById("tableNumber").value;
         cambiarSeccion("pedidos");
         console.log("Bienvenido mesa número: ", mesa);
         var platosCarta = document.getElementById("platosDeLaCarta");
         platosCarta.innerHTML = "";
         console.log(platos);
         for(i in platos){
-            platosCarta.innerHTML += "<dt>"+platos[i].nombre+"</dt><dd><img src="+platos[i].imagen+"></dd><dd><button onclick=restarPlato("+platos[i].id+")>-</button></dd><dd><button onclick=sumarPlato("+platos[i].id+")>+</button></dd>"
+            platosCarta.innerHTML += "<dt>"+platos[i].nombre+"</dt><dd><img src="+platos[i].imagen+"></dd><dd><button onclick=restarPlato("+platos[i].id+")>-</button><button onclick=sumarPlato("+platos[i].id+")>+</button></dd>"
         }
         conexion.send(JSON.stringify({ origen: "cliente", operacion: "entrada", mesa: mesa }));
     })
@@ -58,6 +52,20 @@ function entrar() {
         console.log("Mensaje del servidor: ", event.data);
         var msg = JSON.parse(event.data);
 
+    })
+}
+
+function sumarPlato(idPlato){
+    for(i in platos){
+        if(platos[i].id == idPlato){
+            var plato = platos[i];
+        }
+    }
+    rest.post("/api/sumarPlato/"+mesa, plato, (estado,respuesta) => {
+        if (estado == 201){
+            comanda.innerHTML += "<li>"+respuesta.nombre+"</li>"
+            console.log(respuesta);
+        }
     })
 }
 
