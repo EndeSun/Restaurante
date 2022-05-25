@@ -36,15 +36,18 @@
 
         <label for="food">Plato: </label>
         <input id="food" name="food" type="text" />
-
         <label for="howMany">Cantidad: </label>
         <input type="number" id="howMany" name="howMany"/>
-
       </div>
-      <button onclick="enviarPedido()">Enviar</button>
+      <button onclick="anyadir()">Añadir</button>
       <button onclick="salir()">Salir</button>
-    </div>
 
+      <div id="listaPed">
+        <ol id="pedidosss">
+        </ol>
+        <button onclick="enviarPedidos()">Enviar Pedido</button>
+      </div>
+    </div> 
     <script src="cliente_cliente.js"></script>
   </body>
 </html>

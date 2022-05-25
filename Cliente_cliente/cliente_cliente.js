@@ -28,8 +28,18 @@ function salir() {
     cambiarSeccion("login");
 }
 
-function enviarPedido() {
+function anyadir() {
     var comida = document.getElementById("food");
     var cantidad = document.getElementById("howMany")
-    conexion.send(JSON.stringify({origen: "cliente", operacion: "pedido", comida: comida.value, cantidad: cantidad.value}));
+    // conexion.send(JSON.stringify({origen: "cliente", operacion: "pedido", comida: comida.value, cantidad: cantidad.value}));
+    var pedidosss = document.getElementById("pedidosss");
+    pedidosss.innerHTML += "<li>Comida: "+comida.value+" Cantidad: "+cantidad.value+"</li>"
+
+    comida.value = "";
+    cantidad.value = "";
+}
+
+function enviarPedidos(){
+
+    // for(var i = 0 ; i < )
 }
