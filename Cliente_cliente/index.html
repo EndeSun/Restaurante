@@ -13,9 +13,6 @@
       .activa {
         display: block;
       }
-      img{
-        max-block-size: 200px;
-      }
     </style>
   </head>
   <body>
@@ -33,33 +30,22 @@
       <button onclick="entrar()">Entrar</button>
     </div>
 
-
-    <!-- Parte de los pedidos -->
+    <!-- Parte de los pedidos del cliente-->
     <div id="pedidos" class="seccion">
       <h2>¿Qué te apetece?</h2>
 
       <dl id="platosDeLaCarta"></dl>
-      
-      <div class="seleccion">
 
-      </div>
-      <button onclick="anyadir()">Añadir</button>
       <button onclick="salir()">Salir</button>
 
-      <div id="listaPed">
-        <ol id="pedidosss">
-        </ol>
-        <button onclick="enviarPedidos()">Enviar Pedido</button>
-      </div>
       <div id="comandaCli">
         <h2>Tus Pedidos</h2>
-        <ul id="listaComanda">
-
-        </ul>
+        <ul id="listaComanda"></ul>
       </div>
-    </div> 
+    </div>
 
-
+    <!-- El conjunto de lista de pedidos que tiene el cliente -->
+    
 
     <script src="cliente_cliente.js"></script>
     <script src="rest.js"></script>
