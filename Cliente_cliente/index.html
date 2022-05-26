@@ -32,16 +32,21 @@
 
     <!-- Parte de los pedidos del cliente-->
     <div id="pedidos" class="seccion">
+      <p id="numeroMesa"></p>
       <h2>¿Qué te apetece?</h2>
 
       <dl id="platosDeLaCarta"></dl>
 
-      <button onclick="salir()">Salir</button>
+      
 
       <div id="comandaCli">
         <h2>Tus Pedidos</h2>
         <ul id="listaComanda"></ul>
       </div>
+
+      <p><button onclick="enviarPedidoDelCliente()">Enviar pedido</button></p>
+
+      <button onclick="salir()">Salir</button>
     </div>
 
     <!-- El conjunto de lista de pedidos que tiene el cliente -->

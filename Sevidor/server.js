@@ -25,6 +25,8 @@ app.get("/api/platos", (req, res) => {
 app.get("/api/comandaCliente/:mesa", (req, res) => {
     var mesa = req.params.mesa;
     var comandaClienteDeEsaMesa = [];
+
+
     for (i in comandaCliente) {
         if (comandaCliente[i].mesa == mesa) {
             comandaClienteDeEsaMesa.push(comandaCliente[i]);
@@ -38,32 +40,65 @@ app.post("/api/sumarPlato/:mesa", (req, res) => {
     var plato = {
         id: req.body.id,
         nombre: req.body.nombre,
-        mesa: req.params.mesa
+        mesa: req.params.mesa,
+        cantidad: 1
     };
-    comandaCliente.push(plato);
+
+    var check = false;
+
+    for (i in comandaCliente) {
+
+        if (plato.id == comandaCliente[i].id && plato.mesa == comandaCliente[i].mesa) {
+            comandaCliente[i].cantidad += 1;
+            check = true;
+        }
+    }
+
+    if (check == false) {
+        comandaCliente.push(plato);
+    }
+
     // console.log(comandaCliente)
     res.status(201).json(plato);
 })
 
 // Función para eliminar los platos de la mesa seleccionada
-// app.delete("/api/eliminarPlato/:mesa", (req, res) => {
-//     var mesa = req.params.mesa;
-//     var plato = {
-//         id: req.body.id,
-//         nombre: req.body.nombre,
-//         mesa: mesa
-//     }
-//     // Los nuevos platos, sin el que queremos eliminar
-//     comandaClienteNuevo = [];
-//     for (i in comandaCliente) {
-//         if (comandaCliente[i].id != plato.id) {
-//             comandaClienteNuevo.push(plato[i])
-//         }
-//     }
-//     comandaCliente = comandaClienteNuevo;
-//     res.status(201).json(comandaCliente);
+app.delete("/api/eliminarPlato/:id/:mesa", (req, res) => {
 
-// })
+    var plato = {
+        id: req.params.id,
+        nombre: req.body.nombre,
+        mesa: req.params.mesa,
+        cantidad: 1
+    }
+
+    // Los nuevos platos, sin el que queremos eliminar
+    comandaClienteNuevo = [];
+
+    var check = false;
+
+    // Si existe este plato ya en la comanda o 
+    for (i in comandaCliente) {
+        if (comandaCliente[i].id == plato.id && comandaCliente[i].mesa == plato.mesa && comandaCliente[i].cantidad > 1) {
+            comandaCliente[i].cantidad -= 1;
+            check = true;
+        }
+    }
+
+    // Si no existe ningún plato, que se elimine ese plato de la lista de pedidos.
+    if (check == false) {
+        for (j in comandaCliente) {
+            if (comandaCliente[j].id != plato.id || comandaCliente[j].mesa != plato.mesa) {
+                comandaClienteNuevo.push(comandaCliente[j])
+            }
+        }
+        comandaCliente = comandaClienteNuevo;
+    }
+
+
+
+    res.status(201).json(plato);
+})
 
 
 // El servidor escucha en el puerto 8080.
@@ -124,7 +159,7 @@ wsServer.on('request', (request) => {
 
     clientes.push(cliente);
 
-    console.log("Cliente conectado. Ahroa hay", clientes.length);
+    console.log("Cliente conectado. Ahora hay", clientes.length);
 
     connection.on("message", (message) => {
         if (message.type == "utf8") {

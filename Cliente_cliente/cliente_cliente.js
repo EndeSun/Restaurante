@@ -51,7 +51,9 @@ function entrar() {
             // Cambiamos a la interfaz de los pedidos = donde van a realizar los pedidos los clientes.
 
             cambiarSeccion("pedidos");
-
+            var numeroMesa = document.getElementById("numeroMesa");
+            numeroMesa.innerHTML = "";
+            numeroMesa.innerHTML += "Bienvenidos/as, sois la mesa número: " + mesa;
             // console.log("Bienvenido mesa número: ", mesa);
 
             // Se obtiene la referencia a donde se van a imprimir todos los platos de la carta
@@ -100,33 +102,31 @@ function sumarPlato(idPlato) {
 function pintarComanda() {
     rest.get("/api/comandaCliente/" + mesa, (estado, respuesta) => {
         if (estado == 200) {
-
-            
             var comanda = document.getElementById("listaComanda");
             comanda.innerHTML = "";
             for (i in respuesta) {
-                comanda.innerHTML += "<li>" + respuesta[i].nombre + "</li>"
+                comanda.innerHTML += "<li>Plato: " + respuesta[i].nombre + " Cantidad: "+ respuesta[i].cantidad +"</li>"
             }
         }
     })
 }
 
 // Función de eliminar los platos
-// function restarPlato(idPlato) {
-//     for (i in idPlato) {
-//         if (platos[i].id == idPlato) {
-//             var plato = platos[i];
-//         }
-//     }
-//     rest.delete("/api/eliminarPlato/" + mesa, plato, (estado, respuesta) => {
-//         if (estado == 201) {
-//             for (i in respuesta) {
-//                 comanda.innerHTML += "<li>" + respuesta.nombre + "</li>"
-//             }
-//         }
-//     })
+function restarPlato(idPlato) {
+    for (i in platos) {
+        if (platos[i].id == idPlato) {
+            var plato = platos[i];
+        }
+    }
+    // Recordamos que el método delete tiene solo dos parámetros, la url y el callback.
+    rest.delete("/api/eliminarPlato/" + plato.id + "/" +mesa, (estado, respuesta) => {
+        if (estado == 201) {
+            // console.log(respuesta);
+            pintarComanda();
+        }
+    })
 
-// }
+}
 
 function salir() {
     cambiarSeccion("login");
@@ -136,4 +136,6 @@ function salir() {
 
     var comanda = document.getElementById("listaComanda");
     comanda.innerHTML = "";
+
+    conexion.close();
 }
