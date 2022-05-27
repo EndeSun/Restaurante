@@ -26,8 +26,8 @@ function cambiarSeccion(seccion) {
 // Función al entrar en la interfaz
 function entrar() {
 
-// Que al entrar se muestre los pedidos que lleva ya y no solo al añadir o quitar
-    
+    // Que al entrar se muestre los pedidos que lleva ya y no solo al añadir o quitar
+
     // Parte de websockets
     conexion = new WebSocket("ws://localhost:4444", "clientes");
 
@@ -64,7 +64,7 @@ function entrar() {
             // console.log(platos);
             // Recorremos la lista de los platos para imprimirlos en la pantalla.
             for (i in platos) {
-                platosCarta.innerHTML += "<dt>" + platos[i].nombre + "</dt><dd><img src=" + platos[i].imagen + " alt=" + platos[i].nombre + " width = '150' height = '150' ></dd><dd><button onclick=restarPlato(" + platos[i].id + ")>Quitar</button><button onclick=sumarPlato(" + platos[i].id + ")>Añadir</button></dd>"
+                platosCarta.innerHTML += "<dl><dt>" + platos[i].nombre + "</dt><dd><img src=" + platos[i].imagen + " alt=" + platos[i].nombre + " width = '150' height = '150' ></dd><dd><button onclick=restarPlato(" + platos[i].id + ")>Quitar</button><button onclick=sumarPlato(" + platos[i].id + ")>Añadir</button></dd><dd id=" + platos[i].id + " class='todosLosPlatos'></dd></dl>"
             }
 
             // Se envía al servidor el mensaje de que soy el cliente y qué número de mesa soy
@@ -93,6 +93,10 @@ function sumarPlato(idPlato) {
     rest.post("/api/sumarPlato/" + mesa, plato, (estado, respuesta) => {
         if (estado == 201) {
             // console.log(respuesta)
+            // var platosCartaCantidad = document.getElementsByTagName("dl");
+            // for (i in platosCartaCantidad) {
+            //     platosCartaCantidad[i].lastChild.innerHTML = "";
+            // }
             pintarComanda();
         }
     })
@@ -102,10 +106,27 @@ function sumarPlato(idPlato) {
 function pintarComanda() {
     rest.get("/api/comandaCliente/" + mesa, (estado, respuesta) => {
         if (estado == 200) {
+            // console.log(respuesta)
+            // Donde se van a pintar la lista de comida total
             var comanda = document.getElementById("listaComanda");
             comanda.innerHTML = "";
+
+            // Pero también que se pinte debajo de los platos que se hayan realizado los pedidos
+            // Obtenemos la referencia de todos los platos de la carta con el tag
+            // var platosCartaCantidad = document.getElementsByTagName("dl");
+
+            // Vacíamos primero las cantidades en la carta.
+            var todosLosPlatosCantidad = document.getElementsByClassName("todosLosPlatos");
+            for (j in todosLosPlatosCantidad) {
+                todosLosPlatosCantidad[j].innerHTML = "";
+            }
+            
             for (i in respuesta) {
-                comanda.innerHTML += "<li>Plato: " + respuesta[i].nombre + " Cantidad: "+ respuesta[i].cantidad +"</li>"
+                comanda.innerHTML += "<li>Plato: " + respuesta[i].nombre + " Cantidad total: " + respuesta[i].cantidad + "<button onclick=restarPlato("+ respuesta[i].id +")>Quitar</button><button onclick=sumarPlato("+ respuesta[i].id +")>Añadir</button></li>"
+                // Obtenemos la referencia al html donde se van a pintar el número de platos arriba.
+                var platosCartaCantidad = document.getElementById(respuesta[i].id);
+                // platosCartaCantidad.innerHTML = "";
+                platosCartaCantidad.innerHTML += "Cantidad: " + respuesta[i].cantidad;
             }
         }
     })
@@ -119,13 +140,26 @@ function restarPlato(idPlato) {
         }
     }
     // Recordamos que el método delete tiene solo dos parámetros, la url y el callback.
-    rest.delete("/api/eliminarPlato/" + plato.id + "/" +mesa, (estado, respuesta) => {
+    rest.delete("/api/eliminarPlato/" + plato.id + "/" + mesa, (estado, respuesta) => {
         if (estado == 201) {
             // console.log(respuesta);
+            // var platosCartaCantidad = document.getElementsByTagName("dl");
+            // for (i in platosCartaCantidad) {
+            //     platosCartaCantidad[i].lastChild.innerHTML = "";
+            // }
+
             pintarComanda();
         }
     })
 
+}
+
+function eliminarTodoElPedido(){
+    rest.delete("/api/eliminarTodoElPedido/"+mesa , (estado,respuesta)=>{
+        if(estado == 201){
+            pintarComanda();
+        }
+    })
 }
 
 function salir() {

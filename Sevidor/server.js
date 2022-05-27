@@ -41,6 +41,7 @@ app.post("/api/sumarPlato/:mesa", (req, res) => {
         id: req.body.id,
         nombre: req.body.nombre,
         mesa: req.params.mesa,
+        // imagen: req.params.imagen,
         cantidad: 1
     };
 
@@ -94,10 +95,19 @@ app.delete("/api/eliminarPlato/:id/:mesa", (req, res) => {
         }
         comandaCliente = comandaClienteNuevo;
     }
-
-
-
     res.status(201).json(plato);
+})
+
+app.delete("/api/eliminarTodoElPedido/:mesa", (req,res)=>{
+    mesa = req.params.mesa;
+    var comandaClienteNuevo = [];
+    for(i in comandaCliente){
+        if(comandaCliente[i].mesa != mesa){
+            comandaClienteNuevo.push(comandaCliente[i]);
+        }
+    }
+    comandaCliente = comandaClienteNuevo;
+    res.status(201).json(comandaClienteNuevo);
 })
 
 
