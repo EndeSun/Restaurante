@@ -41,7 +41,7 @@ app.post("/api/sumarPlato/:mesa", (req, res) => {
         id: req.body.id,
         nombre: req.body.nombre,
         mesa: req.params.mesa,
-        // imagen: req.params.imagen,
+        imagen: req.body.imagen,
         cantidad: 1
     };
 

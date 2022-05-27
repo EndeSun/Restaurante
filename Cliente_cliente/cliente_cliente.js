@@ -61,7 +61,7 @@ function entrar() {
             // Lo vacíamos antes de nada para que no se dupliquen
             platosCarta.innerHTML = "";
 
-            // console.log(platos);
+            console.log(platos);
             // Recorremos la lista de los platos para imprimirlos en la pantalla.
             for (i in platos) {
                 platosCarta.innerHTML += "<dl><dt>" + platos[i].nombre + "</dt><dd><img src=" + platos[i].imagen + " alt=" + platos[i].nombre + " width = '150' height = '150' ></dd><dd><button onclick=restarPlato(" + platos[i].id + ")>Quitar</button><button onclick=sumarPlato(" + platos[i].id + ")>Añadir</button></dd><dd id=" + platos[i].id + " class='todosLosPlatos'></dd></dl>"
@@ -122,7 +122,7 @@ function pintarComanda() {
             }
             
             for (i in respuesta) {
-                comanda.innerHTML += "<li>Plato: " + respuesta[i].nombre + " Cantidad total: " + respuesta[i].cantidad + "<button onclick=restarPlato("+ respuesta[i].id +")>Quitar</button><button onclick=sumarPlato("+ respuesta[i].id +")>Añadir</button></li>"
+                comanda.innerHTML += "<li><img src = "+ respuesta[i].imagen +" width = '50' height = '50'/>" + respuesta[i].nombre + " Cantidad total: " + respuesta[i].cantidad + "<button onclick=restarPlato("+ respuesta[i].id +")>Quitar</button><button onclick=sumarPlato("+ respuesta[i].id +")>Añadir</button></li>"
                 // Obtenemos la referencia al html donde se van a pintar el número de platos arriba.
                 var platosCartaCantidad = document.getElementById(respuesta[i].id);
                 // platosCartaCantidad.innerHTML = "";
