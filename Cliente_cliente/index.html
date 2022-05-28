@@ -16,8 +16,15 @@
     </style>
   </head>
   <body>
-    <h1>Restaurante - Cliente</h1>
 
+    <!-- La cabecera -->
+    <header>
+      <h1>Restaurante - Cliente</h1>
+    </header>
+    
+
+    <!-- El cuerpo donde contiene el contenido principal -->
+    <main>
     <div id="login" class="seccion activa">
       <form>
         <h2>Login Cliente</h2>
@@ -35,7 +42,20 @@
       <p id="numeroMesa"></p>
       <h2>¿Qué te apetece?</h2>
 
-      <p id="platosDeLaCarta"></p>
+      <!-- Se definen las diferentes secciones de la carta (se ajusta a las necesidades del cliente) -->
+      <section>
+        <h2>Platos Principales</h2>
+        <p id="Principal" class="seccionesPlatos"></p>
+      </section>
+      <section>
+        <h2>Carnes</h2>
+        <p id="Carne" class="seccionesPlatos"></p>
+      </section>
+      <section>
+        <h2>Bebidas</h2>
+        <p id="Bebida" class="seccionesPlatos"></p>
+      </section>
+      <!-- <p id="platosDeLaCarta"></p> -->
 
       
 
@@ -48,7 +68,12 @@
       <p><button onclick="eliminarTodoElPedido()">Eliminar todos los pedidos</button></p>
       <button onclick="salir()">Salir</button>
     </div>
+  </main>
 
+  <!-- El pie de letra -->
+  <footer>
+
+  </footer>
     <!-- El conjunto de lista de pedidos que tiene el cliente -->
     
 

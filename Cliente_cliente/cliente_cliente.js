@@ -56,15 +56,17 @@ function entrar() {
             numeroMesa.innerHTML += "Bienvenidos/as, sois la mesa número: " + mesa;
             // console.log("Bienvenido mesa número: ", mesa);
 
-            // Se obtiene la referencia a donde se van a imprimir todos los platos de la carta
-            var platosCarta = document.getElementById("platosDeLaCarta");
-            // Lo vacíamos antes de nada para que no se dupliquen
-            platosCarta.innerHTML = "";
-
-            console.log(platos);
+           
+            // Obtenemos la referencia de los tipos de platos que hay, definidos en una misma clase, y lo vacíamos todos.
+            var platosCarta = document.getElementsByClassName("seccionesPlatos");
+            for(j in platosCarta){
+                platosCarta[j].innerHTML = "";
+            }
+            // console.log(platos);
             // Recorremos la lista de los platos para imprimirlos en la pantalla.
             for (i in platos) {
-                platosCarta.innerHTML += "<dl><dt>" + platos[i].nombre + "</dt><dd><img src=" + platos[i].imagen + " alt=" + platos[i].nombre + " width = '150' height = '150' ></dd><dd><button onclick=restarPlato(" + platos[i].id + ")>Quitar</button><button onclick=sumarPlato(" + platos[i].id + ")>Añadir</button></dd><dd id=" + platos[i].id + " class='todosLosPlatos'></dd></dl>"
+                var seccionPlatoCorrespondiente = document.getElementById(platos[i].categoria);
+                seccionPlatoCorrespondiente.innerHTML += "<dl><dt>" + platos[i].nombre + "</dt><dd><img src=" + platos[i].imagen + " alt=" + platos[i].nombre + " width = '150' height = '150' ></dd><dd><button onclick=restarPlato(" + platos[i].id + ")>Quitar</button><button onclick=sumarPlato(" + platos[i].id + ")>Añadir</button></dd><dd id=" + platos[i].id + " class='todosLosPlatos'></dd></dl>"
             }
 
             // Se envía al servidor el mensaje de que soy el cliente y qué número de mesa soy
