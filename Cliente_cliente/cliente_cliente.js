@@ -26,13 +26,21 @@ function cambiarSeccion(seccion) {
 // Función al entrar en la interfaz
 function entrar() {
 
-    // Que al entrar se muestre los pedidos que lleva ya y no solo al añadir o quitar
+    mesa = document.getElementById("tableNumber").value;
+    //Comprobamos que la mesa existe en el sistema
+    rest.get("/api/cliente/"+mesa, function(estado, respuesta){
+        if(estado != 200){
+            alert(respuesta);
+        }
+        if(estado == 200){
 
-    // Parte de websockets
-    conexion = new WebSocket("ws://localhost:4444", "clientes");
+            // Que al entrar se muestre los pedidos que lleva ya y no solo al añadir o quitar
 
-    // Donde se conecta el cliente
-    conexion.addEventListener('open', function (event) {
+        // Parte de websockets
+        conexion = new WebSocket("ws://localhost:4444", "clientes");
+
+        // Donde se conecta el cliente
+        conexion.addEventListener('open', function (event) {
 
 
         // Que al entrar se obtenga la lista de todos los platos
@@ -44,7 +52,7 @@ function entrar() {
             }
 
             // El número de la mesa del cliente.
-            mesa = document.getElementById("tableNumber").value;
+            
 
             // Pintamos llos pedidos de esta mesa
             pintarComanda();
@@ -81,6 +89,9 @@ function entrar() {
         var msg = JSON.parse(event.data);
 
     })
+        }
+    })
+    
 }
 
 

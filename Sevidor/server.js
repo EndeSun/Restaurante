@@ -5,6 +5,7 @@ var datos = require("./datos.js");
 
 var platos = datos.platos;
 var comandaCliente = datos.comandaCliente;
+var mesasn = datos.mesas;
 
 app.set('json spaces', 1);
 app.use("/cliente", express.static("../Cliente_cliente"));
@@ -15,6 +16,18 @@ app.use(express.json());
 
 app.set('json spaces', 1);
 // Parte de REST
+
+//Comprueba el login con el numero de mesa 
+app.get("/api/cliente/:mesa", (req,res) => {
+    var idMesa = req.params.mesa;
+    for(i in mesas){
+        if(mesas[i].id == idMesa){
+            res.status(200).json(idMesa);
+            return;
+        }
+    }
+    res.status(403).json("Mesa no encontrada.");
+})
 
 // Para obtener la información de los platos
 app.get("/api/platos", (req, res) => {
